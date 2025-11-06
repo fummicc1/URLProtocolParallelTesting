@@ -77,7 +77,7 @@ public final class MockURLProtocol: URLProtocol, @unchecked Sendable {
     /// - Propagates any errors thrown by the handler
     override public func startLoading() {
         // URLProtocol's startLoading() is synchronous, so we use Task for async operations
-        Task { @MainActor in
+        Task {
             guard !isCancelled else { return }
 
             // Extract test ID from header

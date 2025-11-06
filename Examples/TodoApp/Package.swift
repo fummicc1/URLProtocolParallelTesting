@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "URLProtocolParallelTesting",
+    name: "TodoApp",
     platforms: [
         .macOS(.v12),
         .iOS(.v15),
@@ -13,22 +13,31 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "URLProtocolParallelTesting",
-            targets: ["URLProtocolParallelTesting"]
+            name: "TodoApp",
+            targets: ["TodoApp"]
         ),
+    ],
+    dependencies: [
+        // Local dependency to URLProtocolParallelTesting
+        .package(path: "../..")
     ],
     targets: [
         .target(
-            name: "URLProtocolParallelTesting",
+            name: "TodoApp",
+            dependencies: [],
             swiftSettings: [
                 .enableExperimentalFeature("StrictConcurrency")
             ]
         ),
         .testTarget(
-            name: "URLProtocolParallelTestingTests",
-            dependencies: ["URLProtocolParallelTesting"],
+            name: "TodoAppTests",
+            dependencies: [
+                "TodoApp",
+                .product(name: "URLProtocolParallelTesting", package: "URLProtocolParallelTesting")
+            ],
             swiftSettings: [
-                .define("DEBUG")
+                .define("DEBUG"),
+                .enableExperimentalFeature("StrictConcurrency")
             ]
         ),
     ]

@@ -199,11 +199,8 @@ extension ResponseBuilder {
         let builder = ResponseBuilder(url: url).statusCode(statusCode)
 
         if let message = message {
-            let errorJSON = #"{"error": "\#(message)"}"#
-            data = errorJSON.data(using: .utf8) ?? Data()
-            let response = try builder
-                .header("Content-Type", "application/json")
-                .build()
+            data = message.data(using: .utf8) ?? Data()
+            let response = try builder.build()
             return (data, response)
         } else {
             data = Data()

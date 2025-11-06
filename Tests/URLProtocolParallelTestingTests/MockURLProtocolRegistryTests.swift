@@ -2,9 +2,16 @@ import Testing
 import Foundation
 @testable import URLProtocolParallelTesting
 
-
-@Suite("MockURLProtocolRegistry Tests")
+@Suite("MockURLProtocolRegistry Tests", .serialized)
 struct MockURLProtocolRegistryTests {
+
+    // Helper for capturing values in @Sendable closures
+    final class Box<T>: @unchecked Sendable {
+        var value: T?
+        init(_ value: T? = nil) {
+            self.value = value
+        }
+    }
 
     // MARK: - Registration Tests
 
